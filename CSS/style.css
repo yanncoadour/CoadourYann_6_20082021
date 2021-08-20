@@ -1,0 +1,24 @@
+body {
+  font-family: DM sans;
+  margin: 1em 1em 1em 1em;
+}
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 200px;
+  height: 50px;
+}
+
+.navbar {
+  width: 968px;
+  height: 157px;
+}
+
+.titre {
+  color: #901c1c;
+  font-size: 36px;
+}
