@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,24 +15,81 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="CSS/style.css" />
-    <title>Document</title>
+    <title>FISHEYE</title>
   </head>
   <body>
-    <header>
-      <div class="navbar">
-        <div class="logo">
-          <img src="medias/logo.png" alt="" />
-        </div>
-        <div class="navigation"></div>
-      </div>
-      <div class="titre">
-        <p>Photographes</p>
-      </div>
-    </header>
-    <main>
-      <div id="profilPhotographe"></div>
-    </main>
+    <div class="bouton-contenu">
+      <a class="contenu" href="#">Passer au contenu</a>
+    </div>
 
-    <script src="js/index.js"></script>
+    <header>
+      <a href="index.html"
+        ><img
+          src="medias/logo.png"
+          alt="logo de fishEye"
+          aria-label="retour sur page accueil"
+      /></a>
+
+      <div id="filtres">
+        <span
+          id="filtre-portrait"
+          data-filter="portrait"
+          aria-label="cliquez pour filtrer les photographes faisant du portrait"
+          >#Portrait</span
+        >
+        <span
+          id="filtre-art"
+          data-filter="art"
+          aria-label="cliquez pour filtrer les photographes faisant de l'art"
+          >#Art</span
+        >
+        <span
+          id="filtre-fashion"
+          data-filter="fashion"
+          aria-label="cliquez pour filtrer les photographes faisant du fashion"
+        >
+          #Fashion</span
+        >
+        <span
+          id="filtre-architecture"
+          data-filter="architecture"
+          aria-label="cliquez pour filtrer les photographes faisant de l'architecture"
+        >
+          #Architecture</span
+        >
+        <span
+          id="filtre-travel"
+          data-filter="travel"
+          aria-label="cliquez pour filtrer les photographes faisant du travel"
+          >#Travel</span
+        >
+        <span
+          id="filtre-sport"
+          data-filter="sport"
+          aria-label="cliquez pour filtrer les photographes faisant du sport"
+          >#Sport</span
+        >
+        <span
+          id="filtre-animals"
+          data-filter="animals"
+          aria-label="cliquez pour filtrer les photographes faisant des animaux"
+          >#Animals</span
+        >
+        <span
+          id="filtre-events"
+          data-filter="events"
+          aria-label="cliquez pour filtrer les photographes faisant des events"
+          >#Events</span
+        >
+      </div>
+
+      <h2 id="nosPhotographes" aria-label="affichez tous les photographes">
+        Nos Photographes
+      </h2>
+    </header>
+
+    <main id="affichageProfil"></main>
+
+    <script src="JS/index.js"></script>
   </body>
 </html>
