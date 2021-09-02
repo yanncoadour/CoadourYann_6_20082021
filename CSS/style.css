@@ -230,3 +230,14 @@ main article #filtres-articles-243 span {
   font-weight: bold;
   font-size: x-small;
 }
+
+.photographerTag {
+  border-radius: 20px;
+  padding: 5px;
+  margin: 2px;
+  background-color: white;
+  color: #901c1c;
+  border: 1px solid grey;
+  font-weight: bold;
+  font-size: x-small;
+}
