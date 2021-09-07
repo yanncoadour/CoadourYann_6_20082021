@@ -1,0 +1,244 @@
+body {
+  width: 1024px;
+  font-family: 'DM Sans', sans-serif;
+  margin: auto;
+  align-items: center;
+  position: relative;
+}
+
+/*--Header de la page---*/
+header {
+  width: 100%;
+  height: 150px;
+  align-items: center;
+  display: flex;
+  justify-content: start;
+}
+header a {
+  width: 230px;
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+}
+header a img {
+  width: 100%;
+}
+header nav {
+  width: 80%;
+  align-items: center;
+  text-align: center;
+}
+header nav button {
+  border-radius: 20px;
+  padding: 5px;
+  background-color: white;
+  color: #901c1c;
+  border: 1px solid grey;
+  font-weight: bold;
+  font-size: x-small;
+  cursor: pointer;
+}
+header nav button:hover {
+  background-color: #901c1c;
+  color: white;
+}
+header h2 {
+  font-size: medium;
+  width: 330px;
+  color: #901c1c;
+}
+
+/*------Bouton contactez moi-----*/
+.contact {
+  position: absolute;
+  top: 240px;
+  left: 355px;
+  cursor: pointer;
+}
+.contact button {
+  padding: 28px 10px 28px 10px;
+  margin: 5px;
+  height: 45px;
+  background-color: #901c1c;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  font-family: 'DM sans';
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+.contact button:hover {
+  background-color: #d3573c;
+  color: black;
+  font-weight: bold;
+}
+
+/*-------Formulaire------------*/
+.fenetre-modale {
+  display: none;
+  z-index: 13;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.fenetre-modale .formulaire {
+  height: auto;
+  width: 675px;
+  background-color: #d3573c;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: absolute;
+  top: 115px;
+  right: 160px;
+  border-radius: 5px;
+  box-shadow: 4px 17px 20px 1px black;
+}
+.fenetre-modale .formulaire #formIntroduction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 135px;
+  margin-bottom: 50px;
+  position: relative;
+}
+.fenetre-modale .formulaire #formIntroduction h1 {
+  font-size: 58px;
+  font-weight: 500;
+  margin: 0px;
+}
+.fenetre-modale .formulaire #formIntroduction h2 {
+  font-size: 58px;
+  font-weight: 500;
+  margin: 0px;
+}
+.fenetre-modale .formulaire #closeBtn {
+  position: absolute;
+  top: 5px;
+  right: 28px;
+  color: white;
+  font-weight: 100;
+  font-size: 66px;
+  border-radius: none;
+  cursor: pointer;
+}
+.fenetre-modale .formulaire #closeBtn img {
+  width: 35px;
+  height: 35px;
+}
+.fenetre-modale .formulaire form {
+  display: flex;
+  flex-direction: column;
+  width: 660px;
+  font-size: 32px;
+}
+.fenetre-modale .formulaire form label {
+  font-weight: lighter;
+  font-size: 46px;
+  display: flex;
+}
+.fenetre-modale .formulaire form input {
+  width: 660px;
+  height: 70px;
+  border-radius: 5px;
+  border: none;
+  font-size: 35px;
+  padding-left: 10px;
+}
+.fenetre-modale .formulaire form textarea {
+  width: 660px;
+  height: 140px;
+  border-radius: 5px;
+  border: none;
+  font-size: 35px;
+  padding-left: 10px;
+}
+.fenetre-modale .formulaire form .soumission {
+  color: white;
+  background-color: #901c1c;
+  width: 170px;
+  height: 70px;
+  font-family: 'DM sans';
+  font-size: 22px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 5px;
+}
+.fenetre-modale .formulaire form .errorFirstName {
+  font-size: large;
+  color: whitesmoke;
+}
+.fenetre-modale .formulaire form .errorlastName {
+  font-size: medium;
+  color: whitesmoke;
+}
+.fenetre-modale .formulaire form .erroreMail {
+  font-size: medium;
+  color: whitesmoke;
+}
+.fenetre-modale .formulaire form .erroreMessageText {
+  font-size: medium;
+  color: whitesmoke;
+}
+
+.fenetre-validation-formulaire {
+  height: 200px;
+  width: 675px;
+  position: fixed;
+  top: 45%;
+  right: 33%;
+  background-color: #d3573c;
+  display: none;
+  border-radius: 5px;
+  box-shadow: 4px 17px 20px 1px black;
+}
+.fenetre-validation-formulaire .contenu-fenetre-validation-formulaire {
+  height: 200px;
+  width: 675px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.fenetre-validation-formulaire .contenu-fenetre-validation-formulaire p {
+  font-size: larger;
+}
+.fenetre-validation-formulaire .contenu-fenetre-validation-formulaire a {
+  padding: 5px;
+  margin: 5px;
+  height: 45px;
+  background-color: #901c1c;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  font-family: 'DM sans';
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  align-items: center;
+  display: flex;
+}
+
+footer {
+  width: 26%;
+  position: sticky;
+  bottom: 0px;
+  right: 0px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #d3573c;
+  color: black;
+  font-weight: bold;
+  align-items: center;
+  border-radius: 5px 5px 0px 0px;
+  margin-left: 755px;
+  z-index: 3;
+}
+footer .fa-heart {
+  cursor: pointer;
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/page_photographe.css" />
+    <script
+      src="https://kit.fontawesome.com/e0ec5a3dfc.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Details</title>
+  </head>
+
+  <body>
+    <header>
+      <a href="index.html"
+        ><img
+          src="medias/logo.png"
+          alt="logo de fishEye"
+          aria-label="Cliquez pour revenir sur la page d'accueil"
+      /></a>
+    </header>
+
+    <main id="mainDivDetail"></main>
+
+    <section>
+      <div class="trier">
+        <label for="selection-photographe">Trier par : </label>
+        <select
+          id="selection-photographe"
+          aria-label="cliquez pour ouvrir la liste déroulante"
+        >
+          <option value="popularite">Popularité</option>
+          <option value="date">Date</option>
+          <option value="titre">Titre</option>
+        </select>
+      </div>
+
+      <div id="carroussel"></div>
+    </section>
+
+    <!-- fenetre modale-->
+    <div class="fenetre-modale">
+      <div class="formulaire">
+        <div id="formIntroduction"></div>
+
+        <div id="closeBtn">
+          <img
+            src="medias/photos/svg/cross white.svg"
+            alt="fermer le formulaire"
+            aria-label="cliquez ici pour fermer le formulaire"
+          />
+        </div>
+        <form
+          id="form"
+          action="#"
+          role="dialog"
+          aria-labelledby="fenetre modale"
+          aria-describedby="fenetre modale"
+        >
+          <label for="firstname">Prénom </label>
+          <div class="errorFirstName"></div>
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            aria-label="Ecrivez votre prénom"
+            aria-describedby="firstname-format"
+          />
+
+          <label for="lastname">Nom </label>
+          <div class="errorlastName"></div>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            aria-label="Ecrivez votre nom"
+            aria-describedby="lastname-format"
+          />
+
+          <label for="email">Email </label>
+          <div class="erroreMail"></div>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            aria-label="Ecrivez votre e-mail"
+            aria-describedby="email-format"
+          />
+
+          <label for="message"> Votre message </label>
+          <div class="erroreMessageText"></div>
+          <textarea
+            name="message"
+            id="message"
+            aria-label="Ecrivez votre message"
+            aria-describedby="text-format"
+          ></textarea>
+
+          <button
+            class="soumission"
+            type="submit"
+            aria-label="cliquez ici pour envoyer votre formulaire"
+          >
+            Envoyer
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- fenetre modale lorsque formulaire envoyé-->
+    <div class="fenetre-validation-formulaire">
+      <div class="contenu-fenetre-validation-formulaire">
+        <p>Votre message à bien été envoyé !</p>
+        <a href="index.html"> Revenir à l'accueil</a>
+      </div>
+    </div>
+
+    <!-- footer-->
+    <div class="contact">
+      <button type="button">Contactez-moi</button>
+    </div>
+    <footer></footer>
+
+    <script type="text/javascript" src="JS/page_photographe.js"></script>
+  </body>
+</html>
