@@ -42,6 +42,7 @@ class Media {
     this.price = price;
   }
 }
+
 let photographers;
 
 fetch('JS/data.json')
@@ -81,6 +82,63 @@ fetch('JS/data.json')
     );
     for (tag of photographer.tags) {
       filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag}">#${tag}</span>`;
+    }
+
+    let carroussel = document.getElementById('carroussel');
+    let mediaData = data.media.filter(
+      media => media.photographerId === parseInt(id)
+    );
+
+    for (data of mediaData) {
+      let media = new Media(
+        data.id,
+        data.photographerId,
+        data.title,
+        data.image,
+        data.video,
+        data.tags,
+        data.likes,
+        data.date,
+        data.price
+      );
+      totalLike += media.likes;
+
+      function generateMediaTag() {
+        if (media.video == undefined) {
+          return `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt=''/>`;
+        }
+        return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
+      }
+      // Création dynamique (from JSON) d'un article pour chaque médias du photographe
+      carroussel.innerHTML += `
+        <article class="carroussel-card" tabindex="${
+          media.photographerId
+        }" aria-label ="s">
+            ${generateMediaTag()} 
+            <div class="description-image">
+            <p tabindex="${
+              media.photographerId
+            }" aria-label=" le titre de l'oeuvre est ${media.titre}">${
+        media.titre
+      }</p>
+            <div class="prix-like">
+               <p tabindex="${
+                 media.photographerId
+               }" aria-label=" le prix de cette photo est ${media.price}€">${
+        media.price
+      } €</p>
+               <div class="like-compteur" tabindex="${
+                 media.photographerId
+               }"> <span class="likeCounter" id="like-counter-${
+        media.id
+      }" aria-label="il à été aimé ${media.likes} fois ">${
+        media.likes
+      }</span><span><i class="fas fa-heart" id="like-media-${
+        media.id
+      }"></i></span></div>
+            </div>
+            </div>
+        </article>`;
     }
   });
 
