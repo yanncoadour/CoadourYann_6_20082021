@@ -3,6 +3,87 @@ let url = new URL(window.location);
 let id = url.searchParams.get('id');
 let totalLike = 0;
 
+// Déclaration de la classe photographer
+
+class Photographer {
+  constructor(name, id, city, country, tags, tagline, price, portrait) {
+    this.name = name;
+    this.id = id;
+    this.city = city;
+    this.country = country;
+    this.tags = tags;
+    this.tagline = tagline;
+    this.price = price;
+    this.portrait = portrait;
+  }
+}
+
+// Déclaration de la classe Media
+class Media {
+  constructor(
+    id,
+    photographerId,
+    title,
+    image,
+    video,
+    tags,
+    likes,
+    date,
+    price
+  ) {
+    this.id = id;
+    this.photographerId = photographerId;
+    this.title = title;
+    this.image = image;
+    this.video = video;
+    this.tags = tags;
+    this.likes = likes;
+    this.date = date;
+    this.price = price;
+  }
+}
+let photographers;
+
+fetch('JS/data.json')
+  .then(response => response.json())
+  .then(function (data) {
+    photographers = data;
+    let photographerData = data.photographers.filter(
+      photographer => photographer.id === parseInt(id)
+    );
+    let photographer = new Photographer(
+      photographerData[0].name,
+      photographerData[0].id,
+      photographerData[0].city,
+      photographerData[0].country,
+      photographerData[0].tags,
+      photographerData[0].tagline,
+      photographerData[0].price,
+      photographerData[0].portrait
+    );
+
+    let mainDivDetail = document.getElementById('mainDivDetail');
+    mainDivDetail.innerHTML += `
+    <main id="mainDivDetail">
+            <div class="presentation">
+                <h1 title="ceci est la page de ${photographer.name}">${photographer.name}</h1>
+                <h3>${photographer.city}, ${photographer.country}</h3>
+                <blockquote>${photographer.tagline}</blockquote>
+      
+                <div id="filtres-articles-${photographer.id}" ></div>
+            </div>
+
+        <img src="medias/photos/profil/${photographer.portrait}" alt="" />
+        </main>`;
+
+    const filtresArticles = document.getElementById(
+      'filtres-articles-' + photographer.id
+    );
+    for (tag of photographer.tags) {
+      filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag}">#${tag}</span>`;
+    }
+  });
+
 //***********************FENETRE MODAL***********************//
 
 let contactMe = document.querySelector('.contact');
