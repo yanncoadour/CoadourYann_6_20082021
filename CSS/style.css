@@ -15,7 +15,10 @@ body {
   margin-top: 20px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  position: fixed;
+  left: 45%;
+  top: 0px;
+  display: none;
 }
 .bouton-contenu .contenu {
   width: 180px;

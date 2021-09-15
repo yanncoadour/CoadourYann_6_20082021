@@ -1,7 +1,6 @@
 // Récupération de l'URL
 let url = new URL(window.location);
 let id = url.searchParams.get('id');
-let totalLike = 0;
 
 // Déclaration de la classe photographer
 
@@ -101,6 +100,8 @@ fetch('JS/data.json')
         data.date,
         data.price
       );
+
+      let totalLike = 0;
       totalLike += media.likes;
 
       function generateMediaTag() {
@@ -109,7 +110,7 @@ fetch('JS/data.json')
         }
         return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
       }
-      // Création dynamique (from JSON) d'un article pour chaque médias du photographe
+      // Création dynamique article pour chaque médias du photographe
       carroussel.innerHTML += `
         <article class="carroussel-card" tabindex="${
           media.photographerId
@@ -139,6 +140,26 @@ fetch('JS/data.json')
             </div>
             </div>
         </article>`;
+
+      //Likes photos
+
+      carroussel.addEventListener('click', incrementationLike);
+
+      function incrementationLike(e) {
+        if (e.target && e.target.id == `like-media-${media.id}`) {
+          let likeCounter = document.getElementById(`like-counter-${media.id}`);
+          let likeValue = parseInt(likeCounter.innerHTML);
+          let nbrLikes = likeValue + 1;
+          likeCounter.innerText = nbrLikes;
+          showNewTotalLikes();
+        }
+
+        function showNewTotalLikes() {
+          totalLike++;
+          const nbrTotalLikes = document.getElementById('nbrTotalLikes');
+          nbrTotalLikes.innerText = totalLike;
+        }
+      }
     }
   });
 

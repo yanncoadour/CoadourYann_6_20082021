@@ -191,3 +191,11 @@ function ensemblephotographe() {
       }
     });
 }
+
+//affichage au scroll
+
+let boutonContenu = document.querySelector('.bouton-contenu');
+window.addEventListener('scroll', () => {
+  boutonContenu.style.display = 'block';
+  boutonContenu.style.display = 'flex';
+});
