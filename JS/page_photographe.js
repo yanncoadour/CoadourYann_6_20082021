@@ -44,6 +44,8 @@ class Media {
 
 let photographers;
 
+// récup données des photographes dans JSON
+
 fetch('JS/data.json')
   .then(response => response.json())
   .then(function (data) {
@@ -61,6 +63,7 @@ fetch('JS/data.json')
       photographerData[0].price,
       photographerData[0].portrait
     );
+    //affichage du HTML dans le main
 
     let mainDivDetail = document.getElementById('mainDivDetail');
     mainDivDetail.innerHTML += `
@@ -76,18 +79,19 @@ fetch('JS/data.json')
         <img src="medias/photos/profil/${photographer.portrait}" alt="" />
         </main>`;
 
+    //affichage des filtres
     const filtresArticles = document.getElementById(
       'filtres-articles-' + photographer.id
     );
     for (tag of photographer.tags) {
       filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag}">#${tag}</span>`;
     }
-
-    let carroussel = document.getElementById('carroussel');
-    let mediaData = data.media.filter(
+    // variables dans le carroussel
+    const carroussel = document.getElementById('carroussel');
+    const mediaData = data.media.filter(
       media => media.photographerId === parseInt(id)
     );
-
+    // Constructeur de l'objet Media
     for (data of mediaData) {
       let media = new Media(
         data.id,
@@ -104,35 +108,29 @@ fetch('JS/data.json')
       let totalLike = 0;
       totalLike += media.likes;
 
+      // Pattern Factory pour créer des vidéos ou photos
       function generateMediaTag() {
         if (media.video == undefined) {
           return `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt=''/>`;
         }
         return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
       }
-      // Création dynamique article pour chaque médias du photographe
+
+      // Création dynamique depuis le JSON d'un article pour chaque médias du photographe
       carroussel.innerHTML += `
-        <article class="carroussel-card" tabindex="${
-          media.photographerId
-        }" aria-label ="s">
+        <article class="carroussel-card">
             ${generateMediaTag()} 
             <div class="description-image">
-            <p tabindex="${
-              media.photographerId
-            }" aria-label=" le titre de l'oeuvre est ${media.titre}">${
-        media.titre
+            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+        media.title
       }</p>
             <div class="prix-like">
-               <p tabindex="${
-                 media.photographerId
-               }" aria-label=" le prix de cette photo est ${media.price}€">${
+               <p aria-label=" le prix de cette photo est ${media.price}€">${
         media.price
       } €</p>
-               <div class="like-compteur" tabindex="${
-                 media.photographerId
-               }"> <span class="likeCounter" id="like-counter-${
-        media.id
-      }" aria-label="il à été aimé ${media.likes} fois ">${
+               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
+                 media.id
+               }" aria-label="il à été aimé ${media.likes} fois ">${
         media.likes
       }</span><span><i class="fas fa-heart" id="like-media-${
         media.id
@@ -141,27 +139,668 @@ fetch('JS/data.json')
             </div>
         </article>`;
 
-      //Likes photos
+      //--------------------------------------- Incrémentation des likes----------------------------------------------------------
 
       carroussel.addEventListener('click', incrementationLike);
 
+      // Affichage du nombre de like avec incrémentation à chaque clic
       function incrementationLike(e) {
         if (e.target && e.target.id == `like-media-${media.id}`) {
-          let likeCounter = document.getElementById(`like-counter-${media.id}`);
-          let likeValue = parseInt(likeCounter.innerHTML);
+          const likeCounter = document.getElementById(
+            `like-counter-${media.id}`
+          );
+          const likeValue = parseInt(likeCounter.innerHTML);
           let nbrLikes = likeValue + 1;
           likeCounter.innerText = nbrLikes;
           showNewTotalLikes();
         }
-
-        function showNewTotalLikes() {
-          totalLike++;
-          const nbrTotalLikes = document.getElementById('nbrTotalLikes');
-          nbrTotalLikes.innerText = totalLike;
-        }
       }
     }
+
+    // Affichage du nombre cumulé de like
+    function showNewTotalLikes() {
+      totalLike++;
+      const nbrTotalLikes = document.getElementById('nbrTotalLikes');
+      nbrTotalLikes.innerText = totalLike;
+    }
+
+    //---------------------------------------------- AFFICHAGE DYNAMIQUE DU FOOTER---------------------------------------------
+
+    const footer = document.querySelector('footer');
+    footer.innerHTML += `
+        <div class="compte-like">
+            <span class="like" id="nbrTotalLikes" aria-label="Ce photographe a été aimé ${photographer.price} fois"></span> <i class="fas fa-heart"></i>
+        </div>
+        <p  aria-label="Le prix de ce photographe est ${photographer.price}€">${photographer.price} €/jour</p> `;
+
+    //-------------------------------------------------- GESTION LIGHTBOX -------------------------------------------------------
+
+    // Déclaration des variables
+    const lightBox = document.getElementById('lightBox');
+    const suivantLightBox = document.getElementById('suivantLightBox');
+    const precedentLightBox = document.getElementById('precedentLightBox');
+    const closeBtnLightBox = document.getElementById('closeBtnLightBox');
+
+    let currentViewedMedia;
+
+    // Ecouteur evenement
+    carroussel.addEventListener('click', throwLightBox);
+
+    // Fonction affichage lightBox
+    function throwLightBox(e) {
+      if (e.target.id.startsWith('carroussel-img-')) {
+        let id = e.target.id.split('-').pop();
+        let media = mediaData.find(element => element.id == id);
+        currentViewedMedia = media;
+
+        const imageTag = `<img class='carroussel-img' id="carroussel-img-${media.id}" src='photos/${media.photographerId}/${media.image}''/>`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='photos/${media.photographerId}/${media.video}''></video>`;
+
+        mainDivDetail.style.visibility = 'hidden';
+        carroussel.style.visibility = 'hidden';
+        footer.style.visibility = 'hidden';
+        lightBox.style.display = 'block';
+
+        photoSlider.innerHTML += `
+                <div id="photo-Slider-${media.id}">
+                    ${media.video == undefined ? imageTag : videoTag} 
+                    <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+          media.title
+        }</p><div>
+                `;
+      }
+    }
+
+    // Clique Bouton suivant
+    suivantLightBox.addEventListener('click', showNextPhoto);
+    window.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight') {
+        showNextPhoto();
+      }
+    });
+
+    // Fonction affichage des photos suivantes
+    function showNextPhoto() {
+      const incrementationIndex = 1;
+      let index = mediaData.indexOf(currentViewedMedia);
+      let nextMedia = mediaData[index + incrementationIndex];
+      currentViewedMedia = nextMedia;
+
+      const imageTag = `<img class="carroussel-img" id="carroussel-img-${nextMedia.id}" src="photos/${nextMedia.photographerId}/${nextMedia.image}">`;
+      const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${nextMedia.id}" src="photos/${nextMedia.photographerId}/${nextMedia.video}"></video>`;
+
+      if (currentViewedMedia != undefined) {
+        photoSlider.innerHTML = `
+                ${nextMedia.video == undefined ? imageTag : videoTag} 
+                <p>${nextMedia.title}</p>
+                <div>
+                </div>
+            `;
+      }
+      if (currentViewedMedia == undefined) {
+        let currentViewedMedia = nextMedia;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let nextMedia = mediaData[index + incrementationIndex];
+      }
+    }
+    //  Clique Bouton précédent
+    precedentLightBox.addEventListener('click', showPreviewPhoto);
+    window.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') {
+        showPreviewPhoto();
+      }
+    });
+
+    // Fonction affichage des photos précédentes
+    function showPreviewPhoto() {
+      const decrementationIndex = 1;
+      let index = mediaData.indexOf(currentViewedMedia);
+      let prevMedia = mediaData[index - decrementationIndex];
+      currentViewedMedia = prevMedia;
+
+      if (currentViewedMedia != undefined) {
+        const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="photos/${prevMedia.photographerId}/${prevMedia.image}">`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="photos/${prevMedia.photographerId}/${prevMedia.video}"></video>`;
+        photoSlider.innerHTML = `
+                ${prevMedia.video == undefined ? imageTag : videoTag} 
+                <p>${prevMedia.title}</p>
+                <div>
+                </div>
+            `;
+      }
+
+      if (currentViewedMedia == undefined) {
+        currentViewedMedia = mediaData[mediaData.length - 1];
+        let index = mediaData.indexOf(currentViewedMedia);
+        let prevMedia = mediaData[index];
+      }
+    }
+    // Fermeture de la LightBox
+    closeBtnLightBox.addEventListener('click', closeBox);
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeBox();
+      }
+    });
+
+    function closeBox() {
+      lightBox.style.display = 'none';
+      carroussel.style.visibility = 'visible';
+      footer.style.visibility = 'visible';
+      mainDivDetail.style.visibility = 'visible';
+      removeDataDiaporama();
+    }
+
+    function removeDataDiaporama() {
+      photoSlider.innerHTML = '';
+    }
   });
+
+//------------------------ Fonction de tri dans la liste déroulante + Lightbox avec tri----------------------------------------------------
+
+const selectElement = document.querySelector('select');
+selectElement.addEventListener('change', triDetails);
+
+function triDetails() {
+  const carroussel = document.getElementById('carroussel');
+  carroussel.innerHTML = '';
+
+  //fonction de tri par popularité
+
+  if (this.selectedIndex === 0) {
+    const mediaListTri = mediaData.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+    for (data of mediaListTri) {
+      const media = new Media(
+        data.id,
+        data.photographerId,
+        data.title,
+        data.image,
+        data.video,
+        data.tags,
+        data.likes,
+        data.date,
+        data.price
+      );
+      // Pattern Factory pour créer des vidéos ou photos selon la nature du média
+      function generateMediaTag() {
+        if (media.video == undefined) {
+          return `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt=''/>`;
+        }
+        return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
+      }
+
+      // Création dynamique depuis le JSON d'un article pour chaque médias du photographe
+      carroussel.innerHTML += `
+        <article class="carroussel-card">
+            ${generateMediaTag()} 
+            <div class="description-image">
+            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+        media.title
+      }</p>
+            <div class="prix-like">
+               <p aria-label=" le prix de cette photo est ${media.price}€">${
+        media.price
+      } €</p>
+               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
+                 media.id
+               }" aria-label="il à été aimé ${media.likes} fois ">${
+        media.likes
+      }</span><span><i class="fas fa-heart" id="like-media-${
+        media.id
+      }"></i></span></div>
+            </div>
+            </div>
+        </article>`;
+
+      // LightBox (tri popularité)
+      const lightBox = document.getElementById('lightBox');
+      const suivantLightBox = document.getElementById('suivantLightBox');
+      const precedentLightBox = document.getElementById('precedentLightBox');
+      const closeBtnLightBox = document.getElementById('closeBtnLightBox');
+      let currentViewedMedia;
+
+      carroussel.addEventListener('click', throwLightBox);
+
+      // fonction d'affichage de la lightBox
+      function throwLightBox(e) {
+        if (e.target.id.startsWith('carroussel-img-')) {
+          let id = e.target.id.split('-').pop();
+          let media = mediaData.find(element => element.id == id);
+          currentViewedMedia = media;
+
+          const imageTag = `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt='}'/>`;
+          const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
+
+          mainDivDetail.style.visibility = 'hidden';
+          carroussel.style.visibility = 'hidden';
+          footer.style.visibility = 'hidden';
+          lightBox.style.display = 'block';
+          photoSlider.innerHTML += `
+                        <div id="photo-Slider-${media.id}">
+                            ${media.video == undefined ? videoTag : imageTag} 
+                            <p aria-label=" le titre de l'oeuvre est ${
+                              media.title
+                            }">${media.title}</p><div>
+                        `;
+        }
+      }
+
+      // Bouton suivant
+      suivantLightBox.addEventListener('click', showNextPhoto);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') {
+          showNextPhoto();
+        }
+      });
+
+      //fonction affichage de la photo suivante
+      function showNextPhoto() {
+        const incrementationIndex = 1;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let nextMedia = mediaData[index + incrementationIndex];
+        currentViewedMedia = nextMedia;
+
+        const imageTag = `<img class="carroussel-img" id="carroussel-img-${nextMedia.id}" src="medias/photos/${nextMedia.photographerId}/${nextMedia.image}" alt="">`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${nextMedia.id}" src="medias/photos/${nextMedia.photographerId}/${nextMedia.video}" alt=""></video>`;
+
+        if (currentViewedMedia != undefined) {
+          photoSlider.innerHTML = `
+                        ${nextMedia.video == undefined ? imageTag : videoTag} 
+                        <p aria-label="">${nextMedia.title}</p>
+                        <div>
+                        </div>
+                    `;
+        }
+
+        if (currentViewedMedia == undefined) {
+          let currentViewedMedia = nextMedia;
+          let index = mediaData.indexOf(currentViewedMedia);
+          let nextMedia = mediaData[index + incrementationIndex];
+        }
+      }
+
+      // Bouton précédent
+      precedentLightBox.addEventListener('click', showPreviewPhoto);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowLeft') {
+          showPreviewPhoto();
+        }
+      });
+
+      // Fonction affichage de la photo Précédente
+      function showPreviewPhoto() {
+        const decrementationIndex = 1;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let prevMedia = mediaData[index - decrementationIndex];
+        currentViewedMedia = prevMedia;
+
+        if (currentViewedMedia != undefined) {
+          const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.image}" alt="">`;
+          const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}" alt=""></video>`;
+          photoSlider.innerHTML = `
+                        ${prevMedia.video == undefined ? imageTag : videoTag} 
+                        <p aria-label="">${prevMedia.title}</p>
+                        <div>
+                        </div>
+                    `;
+        }
+
+        if (currentViewedMedia == undefined) {
+          currentViewedMedia = mediaData[mediaData.length - 1];
+          let index = mediaData.indexOf(currentViewedMedia);
+          let prevMedia = mediaData[index];
+        }
+      }
+
+      // Fermeture de la lightBox
+
+      closeBtnLightBox.addEventListener('click', closeBox);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closeBox();
+        }
+      });
+
+      function closeBox() {
+        lightBox.style.display = 'none';
+        carroussel.style.visibility = 'visible';
+        footer.style.visibility = 'visible';
+        mainDivDetail.style.visibility = 'visible';
+        removeDataDiaporama();
+      }
+
+      function removeDataDiaporama() {
+        photoSlider.innerHTML = '';
+      }
+    }
+
+    // fonction de tri par Date
+  } else if (this.selectedIndex === 1) {
+    const mediaListTri = mediaData.sort((a, b) => (a.date > b.date ? 1 : -1));
+    for (data of mediaListTri) {
+      const media = new Media(
+        data.id,
+        data.photographerId,
+        data.title,
+        data.image,
+        data.video,
+        data.tags,
+        data.likes,
+        data.date,
+        data.price
+      );
+
+      // Pattern Factory pour créer des vidéos ou photos selon la nature du média
+      function generateMediaTag() {
+        if (media.video == undefined) {
+          return `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt=''/>`;
+        }
+        return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
+      }
+
+      // Création dynamique depuis le JSON d'un article pour chaque médias du photographe
+      carroussel.innerHTML += `
+        <article class="carroussel-card">
+            ${generateMediaTag()} 
+            <div class="description-image">
+            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+        media.title
+      }</p>
+            <div class="prix-like">
+               <p aria-label=" le prix de cette photo est ${media.price}€">${
+        media.price
+      } €</p>
+               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
+                 media.id
+               }" aria-label="il à été aimé ${media.likes} fois ">${
+        media.likes
+      }</span><span><i class="fas fa-heart" id="like-media-${
+        media.id
+      }"></i></span></div>
+            </div>
+            </div>
+        </article>`;
+
+      //lightBox tri par Date
+      const lightBox = document.getElementById('lightBox');
+      const suivantLightBox = document.getElementById('suivantLightBox');
+      const precedentLightBox = document.getElementById('precedentLightBox');
+      const closeBtnLightBox = document.getElementById('closeBtnLightBox');
+      let currentViewedMedia;
+
+      carroussel.addEventListener('click', throwLightBox);
+      function throwLightBox(e) {
+        if (e.target.id.startsWith('carroussel-img-')) {
+          let id = e.target.id.split('-').pop();
+          let media = mediaData.find(element => element.id == id);
+          currentViewedMedia = media;
+
+          const imageTag = `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}'/>`;
+          const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}'></video>`;
+
+          mainDivDetail.style.visibility = 'hidden';
+          carroussel.style.visibility = 'hidden';
+          footer.style.visibility = 'hidden';
+          lightBox.style.display = 'block';
+          photoSlider.innerHTML += `
+                    <div id="photo-Slider-${media.id}">
+                        ${media.video == undefined ? imageTag : videoTag} 
+                        <p aria-label=" le titre de l'oeuvre est ${
+                          media.title
+                        }">${media.title}</p><div>
+                    `;
+        }
+      }
+
+      // Affichage de la photo suivante
+      suivantLightBox.addEventListener('click', showNextPhoto);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') {
+          showNextPhoto();
+        }
+      });
+
+      function showNextPhoto() {
+        const incrementationIndex = 1;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let nextMedia = mediaData[index + incrementationIndex];
+        currentViewedMedia = nextMedia;
+
+        const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.image}" alt="">`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}" alt=""></video>`;
+
+        if (currentViewedMedia != undefined) {
+          photoSlider.innerHTML = `
+                    ${nextMedia.video == undefined ? imageTag : videoTag} 
+                    <p aria-label="">${nextMedia.title}</p>
+                    <div>
+                    </div>
+                `;
+        }
+
+        if (currentViewedMedia == undefined) {
+          let currentViewedMedia = nextMedia;
+          let index = mediaData.indexOf(currentViewedMedia);
+          let nexMedia = [index + incrementationIndex];
+        }
+      }
+
+      // Affichage de la photo précédente
+      precedentLightBox.addEventListener('click', showPreviewPhoto);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowLeft') {
+          showPreviewPhoto();
+        }
+      });
+
+      function showPreviewPhoto() {
+        const decrementationIndex = 1;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let prevMedia = mediaData[index - decrementationIndex];
+        currentViewedMedia = prevMedia;
+
+        if (currentViewedMedia != undefined) {
+          const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.image}" >`;
+          const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}" ></video>`;
+          photoSlider.innerHTML = `
+                    ${prevMedia.video == undefined ? imageTag : videoTag} 
+                    <p>${prevMedia.title}</p>
+                    <div>
+                    </div>
+                `;
+        }
+
+        if (currentViewedMedia == undefined) {
+          currentViewedMedia = mediaData[mediaData.length - 1];
+          let index = mediaData.indexOf(currentViewedMedia);
+          let prevMedia = mediaData[index];
+        }
+      }
+
+      // Fermeture de la lightBox
+      closeBtnLightBox.addEventListener('click', closeBox);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closeBox();
+        }
+      });
+
+      function closeBox() {
+        lightBox.style.display = 'none';
+        carroussel.style.visibility = 'visible';
+        footer.style.visibility = 'visible';
+        mainDivDetail.style.visibility = 'visible';
+        removeDataDiaporama();
+      }
+
+      function removeDataDiaporama() {
+        photoSlider.innerHTML = '';
+      }
+    }
+
+    // fonction de tri par Date
+  } else if (this.selectedIndex === 2) {
+    const mediaListTri = mediaData.sort((a, b) => (a.title > b.title ? 1 : -1));
+    for (data of mediaListTri) {
+      const media = new Media(
+        data.id,
+        data.photographerId,
+        data.title,
+        data.image,
+        data.video,
+        data.tags,
+        data.likes,
+        data.date,
+        data.price
+      );
+
+      // Pattern Factory pour créer des vidéos ou photos selon la nature du média
+      function generateMediaTag() {
+        if (media.video == undefined) {
+          return `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt=''/>`;
+        }
+        return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt=''></video>`;
+      }
+
+      // Création dynamique depuis le JSON d'un article pour chaque médias du photographe
+      carroussel.innerHTML += `
+        <article class="carroussel-card">
+            ${generateMediaTag()} 
+            <div class="description-image">
+            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+        media.title
+      }</p>
+            <div class="prix-like">
+               <p aria-label=" le prix de cette photo est ${media.price}€">${
+        media.price
+      } €</p>
+               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
+                 media.id
+               }" aria-label="il à été aimé ${media.likes} fois ">${
+        media.likes
+      }</span><span><i class="fas fa-heart" id="like-media-${
+        media.id
+      }"></i></span></div>
+            </div>
+            </div>
+        </article>`;
+
+      // Gestion de la LightBox (tri par titre)
+      const lightBox = document.getElementById('lightBox');
+      const suivantLightBox = document.getElementById('suivantLightBox');
+      const precedentLightBox = document.getElementById('precedentLightBox');
+      const closeBtnLightBox = document.getElementById('closeBtnLightBox');
+      const section = document.querySelector('section');
+      let currentViewedMedia;
+
+      // Affichage dynamique de la lightbox
+      carroussel.addEventListener('click', throwLightBox);
+      function throwLightBox(e) {
+        if (e.target.id.startsWith('carroussel-img-')) {
+          let id = e.target.id.split('-').pop();
+          let media = mediaData.find(element => element.id == id);
+          currentViewedMedia = media;
+
+          const imageTag = `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}'/>`;
+          const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}'></video>`;
+
+          mainDivDetail.style.visibility = 'hidden';
+          carroussel.style.visibility = 'hidden';
+          footer.style.visibility = 'hidden';
+          lightBox.style.display = 'block';
+
+          photoSlider.innerHTML += `
+                <div id="photo-Slider-${media.id}">
+                    ${media.video == undefined ? imageTag : videoTag} 
+                    <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+            media.title
+          }</p><div>
+                `;
+        }
+        console.log('ceci est ', imageTag);
+      }
+
+      // Afficher la photo précédente
+      suivantLightBox.addEventListener('click', showNextPhoto);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') {
+          showNextPhoto();
+        }
+      });
+      function showNextPhoto() {
+        const incrementationIndex = 1;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let nextMedia = mediaData[index + incrementationIndex];
+        currentViewedMedia = nextMedia;
+
+        const imageTag = `<img class="carroussel-img" id="carroussel-img-${nextMedia.id}" src="medias/photos/${nextMedia.photographerId}/${nextMedia.image}">`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${nextMedia.id}" src="medias/photos/${nextMedia.photographerId}/${nextMedia.video}"></video>`;
+
+        if (currentViewedMedia != undefined) {
+          photoSlider.innerHTML = `
+                ${nextMedia.video == undefined ? imageTag : videoTag} 
+                <p>${nextMedia.title}</p>
+                <div>
+                </div>
+            `;
+        }
+        if (currentViewedMedia == undefined) {
+          let currentViewedMedia = nextMedia;
+          let index = mediaData.indexOf(currentViewedMedia);
+          let nextMedia = mediaData[index + incrementationIndex];
+        }
+      }
+
+      // Afficher la photo précédente
+      precedentLightBox.addEventListener('click', showPreviewPhoto);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'ArrowLeft') {
+          showPreviewPhoto();
+        }
+      });
+      function showPreviewPhoto() {
+        const decrementationIndex = 1;
+        let index = mediaData.indexOf(currentViewedMedia);
+        let prevMedia = mediaData[index - decrementationIndex];
+        currentViewedMedia = prevMedia;
+
+        if (currentViewedMedia != undefined) {
+          const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.image}">`;
+          const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}"></video>`;
+          photoSlider.innerHTML = `
+                ${prevMedia.video == undefined ? imageTag : videoTag} 
+                <p>${prevMedia.title}</p>
+                <div>
+                </div>
+            `;
+        }
+        if (currentViewedMedia == undefined) {
+          currentViewedMedia = mediaData[mediaData.length - 1];
+          let index = mediaData.indexOf(currentViewedMedia);
+          let prevMedia = mediaData[index];
+        }
+      }
+
+      // Fermeture de la lightBox
+      closeBtnLightBox.addEventListener('click', closeBox);
+      window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closeBox();
+        }
+      });
+      function closeBox() {
+        lightBox.style.display = 'none';
+        carroussel.style.visibility = 'visible';
+        footer.style.visibility = 'visible';
+        mainDivDetail.style.visibility = 'visible';
+        removeDataDiaporama();
+      }
+      function removeDataDiaporama() {
+        photoSlider.innerHTML = '';
+      }
+    }
+  }
+}
 
 //***********************FENETRE MODAL***********************//
 
