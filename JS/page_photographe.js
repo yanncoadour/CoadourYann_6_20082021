@@ -69,14 +69,14 @@ fetch('JS/data.json')
     mainDivDetail.innerHTML += `
     <main id="mainDivDetail">
             <div class="presentation">
-                <h1 title="ceci est la page de ${photographer.name}">${photographer.name}</h1>
-                <h3>${photographer.city}, ${photographer.country}</h3>
-                <blockquote>${photographer.tagline}</blockquote>
+                <h1 tabindex="3" title="ceci est la page de ${photographer.name}">${photographer.name}</h1>
+                <h3 tabindex="4">${photographer.city}, ${photographer.country}</h3>
+                <blockquote tabindex="5">${photographer.tagline}</blockquote>
       
-                <div id="filtres-articles-${photographer.id}" ></div>
+                <div id="filtres-articles-${photographer.id}" tabindex="6" ></div>
             </div>
 
-        <img src="medias/photos/profil/${photographer.portrait}" alt="" />
+        <img src="medias/photos/profil/${photographer.portrait}" alt="" tabindex="7"/>
         </main>`;
 
     //affichage des filtres
@@ -118,19 +118,25 @@ fetch('JS/data.json')
 
       // Création dynamique depuis le JSON d'un article pour chaque médias du photographe
       carroussel.innerHTML += `
-        <article class="carroussel-card">
+        <article class="carroussel-card" tabindex="${media.photographerId}">
             ${generateMediaTag()} 
             <div class="description-image">
-            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+            <p tabindex="${
+              media.photographerId
+            }" aria-label=" le titre de l'oeuvre est ${media.title}">${
         media.title
       }</p>
             <div class="prix-like">
-               <p aria-label=" le prix de cette photo est ${media.price}€">${
+               <p tabindex="${
+                 media.photographerId
+               }" aria-label=" le prix de cette photo est ${media.price}€">${
         media.price
       } €</p>
-               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
-                 media.id
-               }" aria-label="il à été aimé ${media.likes} fois ">${
+               <div class="like-compteur" tabindex="${
+                 media.photographerId
+               }"> <span class="likeCounter" id="like-counter-${
+        media.id
+      }" aria-label="il à été aimé ${media.likes} fois ">${
         media.likes
       }</span><span><i class="fas fa-heart" id="like-media-${
         media.id
@@ -169,9 +175,9 @@ fetch('JS/data.json')
     const footer = document.querySelector('footer');
     footer.innerHTML += `
         <div class="compte-like">
-            <span class="like" id="nbrTotalLikes" aria-label="Ce photographe a été aimé ${photographer.price} fois"></span> <i class="fas fa-heart"></i>
+            <span class="like" id="nbrTotalLikes" tabindex="${photographer.id} aria-label="Ce photographe a été aimé ${photographer.price} fois"></span> <i class="fas fa-heart"></i>
         </div>
-        <p  aria-label="Le prix de ce photographe est ${photographer.price}€">${photographer.price} €/jour</p> `;
+        <p tabindex="${photographer.id} aria-label="Le prix de ce photographe est ${photographer.price}€">${photographer.price} €/jour</p> `;
 
     //------------------------ Fonction de tri dans la liste déroulante + Lightbox----------------------------------------------------
 
@@ -210,19 +216,25 @@ fetch('JS/data.json')
 
           //  article pour chaque médias du photographe (créa avec JSON)
           carroussel.innerHTML += `
-        <article class="carroussel-card">
+        <article class="carroussel-card" tabindex="${media.photographerId}">
             ${generateMediaTag()} 
             <div class="description-image">
-            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+            <p tabindex="${
+              media.photographerId
+            }" aria-label=" le titre de l'oeuvre est ${media.title}">${
             media.title
           }</p>
             <div class="prix-like">
-               <p aria-label=" le prix de cette photo est ${media.price}€">${
+               <p tabindex="${
+                 media.photographerId
+               }" aria-label=" le prix de cette photo est ${media.price}€">${
             media.price
           } €</p>
-               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
-                 media.id
-               }" aria-label="il à été aimé ${media.likes} fois ">${
+               <div class="like-compteur" tabindex="${
+                 media.photographerId
+               }"> <span class="likeCounter" id="like-counter-${
+            media.id
+          }" aria-label="il à été aimé ${media.likes} fois ">${
             media.likes
           }</span><span><i class="fas fa-heart" id="like-media-${
             media.id
@@ -258,9 +270,11 @@ fetch('JS/data.json')
               photoSlider.innerHTML += `
                         <div id="photo-Slider-${media.id}">
                             ${media.video == undefined ? videoTag : imageTag} 
-                            <p aria-label=" le titre de l'oeuvre est ${
-                              media.title
-                            }">${media.title}</p><div>
+                            <p tabindex="${
+                              media.photographerId
+                            }" aria-label=" le titre de l'oeuvre est ${
+                media.title
+              }">${media.title}</p><div>
                         `;
             }
           }
@@ -286,7 +300,9 @@ fetch('JS/data.json')
             if (currentViewedMedia != undefined) {
               photoSlider.innerHTML = `
                         ${nextMedia.video == undefined ? imageTag : videoTag} 
-                        <p aria-label="">${nextMedia.title}</p>
+                        <p tabindex="${
+                          nextMedia.photographerId
+                        }"aria-label="">${nextMedia.title}</p>
                         <div>
                         </div>
                     `;
@@ -319,7 +335,9 @@ fetch('JS/data.json')
               const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}" alt=""></video>`;
               photoSlider.innerHTML = `
                         ${prevMedia.video == undefined ? imageTag : videoTag} 
-                        <p aria-label="">${prevMedia.title}</p>
+                        <p tabindex="${
+                          prevMedia.photographerId
+                        }" aria-label="">${prevMedia.title}</p>
                         <div>
                         </div>
                     `;
@@ -382,19 +400,25 @@ fetch('JS/data.json')
 
           //  Article pour chaque médias du photographe (créa avec JSON)
           carroussel.innerHTML += `
-        <article class="carroussel-card">
+        <article class="carroussel-card" tabindex="${media.photographerId}">
             ${generateMediaTag()} 
             <div class="description-image">
-            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+            <p tabindex="${
+              media.photographerId
+            }" aria-label=" le titre de l'oeuvre est ${media.title}">${
             media.title
           }</p>
             <div class="prix-like">
-               <p aria-label=" le prix de cette photo est ${media.price}€">${
+               <p tabindex="${
+                 media.photographerId
+               }" aria-label=" le prix de cette photo est ${media.price}€">${
             media.price
           } €</p>
-               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
-                 media.id
-               }" aria-label="il à été aimé ${media.likes} fois ">${
+               <div class="like-compteur" tabindex="${
+                 media.photographerId
+               }"> <span class="likeCounter" id="like-counter-${
+            media.id
+          }" aria-label="il à été aimé ${media.likes} fois ">${
             media.likes
           }</span><span><i class="fas fa-heart" id="like-media-${
             media.id
@@ -428,9 +452,11 @@ fetch('JS/data.json')
               photoSlider.innerHTML += `
                     <div id="photo-Slider-${media.id}">
                         ${media.video == undefined ? imageTag : videoTag} 
-                        <p aria-label=" le titre de l'oeuvre est ${
-                          media.title
-                        }">${media.title}</p><div>
+                        <p tabindex="${
+                          media.photographerId
+                        }" aria-label=" le titre de l'oeuvre est ${
+                media.title
+              }">${media.title}</p><div>
                     `;
             }
           }
@@ -455,7 +481,9 @@ fetch('JS/data.json')
             if (currentViewedMedia != undefined) {
               photoSlider.innerHTML = `
                     ${nextMedia.video == undefined ? imageTag : videoTag} 
-                    <p aria-label="">${nextMedia.title}</p>
+                    <p tabindex="${nexMedia.photographerId}" aria-label="">${
+                nextMedia.title
+              }</p>
                     <div>
                     </div>
                 `;
@@ -487,7 +515,9 @@ fetch('JS/data.json')
               const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}" ></video>`;
               photoSlider.innerHTML = `
                     ${prevMedia.video == undefined ? imageTag : videoTag} 
-                    <p>${prevMedia.title}</p>
+                    <p tabindex="${prevMedia.photographerId}">${
+                prevMedia.title
+              }</p>
                     <div>
                     </div>
                 `;
@@ -549,19 +579,25 @@ fetch('JS/data.json')
 
           //  article pour chaque médias du photographe (créa avec JSON)
           carroussel.innerHTML += `
-        <article class="carroussel-card">
+        <article class="carroussel-card" tabindex="${media.photographerId}">
             ${generateMediaTag()} 
             <div class="description-image">
-            <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+            <p tabindex="${
+              media.photographerId
+            }" aria-label=" le titre de l'oeuvre est ${media.title}">${
             media.title
           }</p>
             <div class="prix-like">
-               <p aria-label=" le prix de cette photo est ${media.price}€">${
+               <p tabindex="${
+                 media.photographerId
+               }" aria-label=" le prix de cette photo est ${media.price}€">${
             media.price
           } €</p>
-               <div class="like-compteur"> <span class="likeCounter" id="like-counter-${
-                 media.id
-               }" aria-label="il à été aimé ${media.likes} fois ">${
+               <div class="like-compteur" tabindex="${
+                 media.photographerId
+               }"> <span class="likeCounter" id="like-counter-${
+            media.id
+          }" aria-label="il à été aimé ${media.likes} fois ">${
             media.likes
           }</span><span><i class="fas fa-heart" id="like-media-${
             media.id
@@ -598,7 +634,9 @@ fetch('JS/data.json')
               photoSlider.innerHTML += `
                 <div id="photo-Slider-${media.id}">
                     ${media.video == undefined ? imageTag : videoTag} 
-                    <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+                    <p tabindex="${
+                      media.photographerId
+                    }" aria-label=" le titre de l'oeuvre est ${media.title}">${
                 media.title
               }</p><div>
                 `;
@@ -625,7 +663,7 @@ fetch('JS/data.json')
             if (currentViewedMedia != undefined) {
               photoSlider.innerHTML = `
                 ${nextMedia.video == undefined ? imageTag : videoTag} 
-                <p>${nextMedia.title}</p>
+                <p tabindex="${nextMedia.photographerId}">${nextMedia.title}</p>
                 <div>
                 </div>
             `;
@@ -655,7 +693,7 @@ fetch('JS/data.json')
               const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}"></video>`;
               photoSlider.innerHTML = `
                 ${prevMedia.video == undefined ? imageTag : videoTag} 
-                <p>${prevMedia.title}</p>
+                <p tabindex="${prevMedia.photographerId}">${prevMedia.title}</p>
                 <div>
                 </div>
             `;
@@ -719,7 +757,9 @@ fetch('JS/data.json')
         photoSlider.innerHTML += `
                 <div id="photo-Slider-${media.id}">
                     ${media.video == undefined ? imageTag : videoTag} 
-                    <p aria-label=" le titre de l'oeuvre est ${media.title}">${
+                    <p tabindex="${
+                      media.photographerId
+                    }" aria-label=" le titre de l'oeuvre est ${media.title}">${
           media.title
         }</p><div>
                 `;
@@ -747,7 +787,7 @@ fetch('JS/data.json')
       if (currentViewedMedia != undefined) {
         photoSlider.innerHTML = `
                 ${nextMedia.video == undefined ? imageTag : videoTag} 
-                <p>${nextMedia.title}</p>
+                <p tabindex="${nextMedia.photographerId}">${nextMedia.title}</p>
                 <div>
                 </div>
             `;
@@ -778,7 +818,7 @@ fetch('JS/data.json')
         const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="photos/${prevMedia.photographerId}/${prevMedia.video}"></video>`;
         photoSlider.innerHTML = `
                 ${prevMedia.video == undefined ? imageTag : videoTag} 
-                <p>${prevMedia.title}</p>
+                <p tabindex="${prevMedia.photographerId}">${prevMedia.title}</p>
                 <div>
                 </div>
             `;

@@ -1,8 +1,8 @@
-//Appeler ID #affichageProfil
+// Appeler ID #affichageProfil
 
-let affichageProfil = document.getElementById('affichageProfil');
+const affichageProfil = document.getElementById('affichageProfil');
 
-//Création de la class photographer
+// Création de la class photographer
 
 class Photographer {
   constructor(name, id, city, country, tags, tagline, price, portrait) {
@@ -17,13 +17,13 @@ class Photographer {
   }
 }
 
-//Récupération donnnées JSON et Affichage des photographes
+// Récupération donnnées JSON et Affichage des photographes
 
 fetch('JS/data.json')
   .then(response => response.json())
-  .then(function (data) {
+  .then(data => {
     for (item of data.photographers) {
-      let photographer = new Photographer(
+      const photographer = new Photographer(
         item.name,
         item.id,
         item.city,
@@ -35,19 +35,19 @@ fetch('JS/data.json')
       );
       affichageProfil.innerHTML += `
       
-      <article>
+      <article tabindex="12">
                 <a href="page_photographe.html?id=${photographer.id}" aria-label="cliquez sur la photo pour afficher le profil de ${photographer.name}">
                 <img id="photoProfil"  src="../medias/photos/profil/${photographer.portrait}" />
                 </a>
 
                 <div class="description-article">
 
-                    <h2 aria-label="Le nom du photographe est ${photographer.name} ">${photographer.name}</h2>
+                    <h2 tabindex="13" aria-label="Le nom du photographe est ${photographer.name} ">${photographer.name}</h2>
 
-                    <h3 aria-label="Le photographe viens de ${photographer.city}">${photographer.city}, ${photographer.country}</h3>
+                    <h3 tabindex="14" aria-label="Le photographe viens de ${photographer.city}">${photographer.city}, ${photographer.country}</h3>
 
-                    <blockquote aria-label="La devise du photographe est :${photographer.tagline}">${photographer.tagline}</blockquote>
-                    <p aria-label="Le prix de ce photographe est ${photographer.price}€ par jour">${photographer.price}€ /jour</p>
+                    <blockquote tabindex="15" aria-label="La devise du photographe est :${photographer.tagline}">${photographer.tagline}</blockquote>
+                    <p tabindex="16" aria-label="Le prix de ce photographe est ${photographer.price}€ par jour">${photographer.price}€ /jour</p>
                 </div>
                 <div id="filtres-articles-${photographer.id}"></div>
         </article>  
@@ -56,24 +56,24 @@ fetch('JS/data.json')
 
       // récupération des tags
       const filtresArticles = document.getElementById(
-        'filtres-articles-' + photographer.id
+        `filtres-articles-${photographer.id}`
       );
       for (tag of photographer.tags) {
-        filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag}">#${tag}</span>`;
+        filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag} tabindex="${photographer.id}" aria-label="${photographer.name} est spécialisé dans les ${tag}">#${tag}</span>`;
       }
     }
   });
 
 // FILTRES
-let filtrePortrait = document.getElementById('filtre-portrait');
-let filtreArt = document.getElementById('filtre-art');
-let filtreFashion = document.getElementById('filtre-fashion');
-let filtreArchitecture = document.getElementById('filtre-architecture');
-let filtreTravel = document.getElementById('filtre-travel');
-let filtreSport = document.getElementById('filtre-sport');
-let filtreAnimals = document.getElementById('filtre-animals');
-let filtreEvents = document.getElementById('filtre-events');
-let nosPhotograpes = document.getElementById('nosPhotographes');
+const filtrePortrait = document.getElementById('filtre-portrait');
+const filtreArt = document.getElementById('filtre-art');
+const filtreFashion = document.getElementById('filtre-fashion');
+const filtreArchitecture = document.getElementById('filtre-architecture');
+const filtreTravel = document.getElementById('filtre-travel');
+const filtreSport = document.getElementById('filtre-sport');
+const filtreAnimals = document.getElementById('filtre-animals');
+const filtreEvents = document.getElementById('filtre-events');
+const nosPhotograpes = document.getElementById('nosPhotographes');
 
 filtrePortrait.addEventListener('click', filtrephotographe);
 filtreArt.addEventListener('click', filtrephotographe);
@@ -85,16 +85,16 @@ filtreAnimals.addEventListener('click', filtrephotographe);
 filtreEvents.addEventListener('click', filtrephotographe);
 nosPhotograpes.addEventListener('click', ensemblephotographe);
 
-//Function filtrephotographe
+// Function filtrephotographe
 
 function filtrephotographe() {
   affichageProfil.innerHTML = '';
-  let filtreActif = this.dataset.filter;
-  let listePhotographe = [];
+  const filtreActif = this.dataset.filter;
+  const listePhotographe = [];
 
   fetch('JS/data.json')
     .then(response => response.json())
-    .then(function (data) {
+    .then(data => {
       for (item of data.photographers) {
         const photographer = new Photographer(
           item.name,
@@ -136,7 +136,7 @@ function filtrephotographe() {
             `;
         // récupération des tags
         const filtresArticles = document.getElementById(
-          'filtres-articles-' + photographer.id
+          `filtres-articles-${photographer.id}`
         );
         for (tag of photographer.tags) {
           filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag}">#${tag}</span>`;
@@ -149,7 +149,7 @@ function ensemblephotographe() {
   affichageProfil.innerHTML = '';
   fetch('JS/data.json')
     .then(response => response.json())
-    .then(function (data) {
+    .then(data => {
       for (item of data.photographers) {
         const photographer = new Photographer(
           item.name,
@@ -183,7 +183,7 @@ function ensemblephotographe() {
 
         // récupération des tags
         const filtresArticles = document.getElementById(
-          'filtres-articles-' + photographer.id
+          `filtres-articles-${photographer.id}`
         );
         for (tag of photographer.tags) {
           filtresArticles.innerHTML += `<span class="photographerTag" data-tag="${tag}">#${tag}</span>`;
@@ -192,9 +192,9 @@ function ensemblephotographe() {
     });
 }
 
-//affichage au scroll
+// affichage au scroll
 
-let boutonContenu = document.querySelector('.bouton-contenu');
+const boutonContenu = document.querySelector('.bouton-contenu');
 window.addEventListener('scroll', () => {
   boutonContenu.style.display = 'block';
   boutonContenu.style.display = 'flex';
