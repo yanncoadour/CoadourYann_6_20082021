@@ -564,3 +564,568 @@ footer {
 footer .fa-heart {
   cursor: pointer;
 }
+
+@media screen and (max-width: 426px) {
+  body {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    margin: auto;
+    align-items: center;
+  }
+
+  /*--Header de la page---*/
+  header {
+    width: 100%;
+    height: 100px;
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  header a img {
+    width: 60%;
+    position: absolute;
+    top: 25px;
+    left: -25px;
+  }
+
+  /*------Description photographe avec photo ID----------*/
+  main {
+    width: 100%;
+    height: 240px;
+  }
+  main .presentation {
+    width: 240px;
+    padding-left: 4%;
+    height: 240px;
+  }
+  main .presentation h1 {
+    font-size: 32px;
+    height: auto;
+    width: 100%;
+  }
+  main .presentation h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  main .presentation blockquote {
+    font-size: 13px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+  }
+  main .presentation #filtres-articles-243 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-243 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main .presentation #filtres-articles-930 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-930 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main .presentation #filtres-articles-82 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-82 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main .presentation #filtres-articles-527 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-527 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main .presentation #filtres-articles-925 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-925 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main .presentation #filtres-articles-195 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-195 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main .presentation #filtres-articles-243 {
+    height: 10px;
+  }
+  main .presentation #filtres-articles-243 span {
+    border-radius: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    background-color: white;
+    color: #901c1c;
+    border: 1px solid grey;
+    font-weight: bold;
+    font-size: 11px;
+  }
+  main img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 60px;
+    right: 18px;
+  }
+
+  .contact {
+    position: sticky;
+    bottom: 3%;
+    left: 27%;
+    width: 170px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+  }
+  .contact button {
+    display: flex;
+    justify-content: center;
+    width: 170px;
+    height: 36px;
+    margin-bottom: 5%;
+    padding: 5px 10px 5px 10px;
+  }
+
+  /*--- Description image du carroussel ----*/
+  section .trier {
+    display: none;
+  }
+  section #carroussel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    margin-top: 40px;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  section #carroussel .carroussel-card {
+    width: 100%;
+  }
+  section #carroussel .carroussel-card img {
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  section #carroussel .carroussel-card video {
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  section #carroussel .carroussel-card .description-image {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #901c1c;
+    font-weight: bold;
+    align-items: flex-start;
+    height: 70px;
+    padding-top: 5px;
+  }
+  section #carroussel .carroussel-card .description-image p {
+    margin: 0px;
+  }
+  section #carroussel .carroussel-card .prix-like {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5px;
+    width: 95px;
+  }
+  section #carroussel .carroussel-card .prix-like p {
+    margin: 0px;
+    width: 55px;
+  }
+  section #carroussel .carroussel-card .prix-like .like-compteur {
+    width: 60px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  section #carroussel .carroussel-card .prix-like .like-compteur .fa-heart {
+    cursor: pointer;
+    margin-left: 3px;
+  }
+
+  /*-------Formulaire------------*/
+  .fenetre-modale {
+    display: none;
+    z-index: 13;
+    position: fixed;
+    width: 100%;
+  }
+  .fenetre-modale .formulaire {
+    height: auto;
+    width: 100%;
+    background-color: #d3573c;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 5px;
+    box-shadow: 4px 17px 20px 1px black;
+  }
+  .fenetre-modale .formulaire #formIntroduction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 135px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .fenetre-modale .formulaire #formIntroduction h1 {
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0px;
+  }
+  .fenetre-modale .formulaire #formIntroduction h2 {
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0px;
+  }
+  .fenetre-modale .formulaire #closeBtn {
+    position: absolute;
+    top: 50px;
+    right: 80px;
+    color: white;
+    font-weight: 100;
+    font-size: 30px;
+    border-radius: none;
+    cursor: pointer;
+  }
+  .fenetre-modale .formulaire #closeBtn img {
+    width: 22px;
+    height: 22px;
+  }
+  .fenetre-modale .formulaire form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 22px;
+  }
+  .fenetre-modale .formulaire form label {
+    font-weight: lighter;
+    font-size: 24px;
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1%;
+  }
+  .fenetre-modale .formulaire form input {
+    width: 85%;
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    font-size: 24px;
+    padding-left: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1%;
+    align-items: center;
+  }
+  .fenetre-modale .formulaire form textarea {
+    width: 85%;
+    height: 140px;
+    border-radius: 5px;
+    border: none;
+    font-size: 35px;
+    padding-left: 10px;
+  }
+  .fenetre-modale .formulaire form .soumission {
+    color: white;
+    background-color: #901c1c;
+    width: 170px;
+    height: 35px;
+    font-family: 'DM sans';
+    font-size: 22px;
+    margin-top: 30px;
+    margin-left: 20%;
+    border: none;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    right: 0;
+  }
+  .fenetre-modale .formulaire form .errorFirstName {
+    font-size: 14px;
+    color: whitesmoke;
+  }
+  .fenetre-modale .formulaire form .errorlastName {
+    font-size: 14px;
+    color: whitesmoke;
+  }
+  .fenetre-modale .formulaire form .erroreMail {
+    font-size: 14px;
+    color: whitesmoke;
+  }
+  .fenetre-modale .formulaire form .erroreMessageText {
+    font-size: 14px;
+    color: whitesmoke;
+  }
+
+  .fenetre-validation-formulaire {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #d3573c;
+    display: none;
+    border-radius: 5px;
+    box-shadow: 4px 17px 20px 1px black;
+    z-index: 100000;
+  }
+  .fenetre-validation-formulaire .contenu-fenetre-validation-formulaire {
+    height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 70%;
+  }
+  .fenetre-validation-formulaire .contenu-fenetre-validation-formulaire p {
+    font-size: larger;
+  }
+  .fenetre-validation-formulaire .contenu-fenetre-validation-formulaire a {
+    padding: 5px;
+    margin: 5px;
+    height: 45px;
+    background-color: #901c1c;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    font-family: 'DM sans';
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    align-items: center;
+    display: flex;
+  }
+
+  #lightBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    top: 0px;
+    left: 0;
+    background-color: white;
+    z-index: 400000;
+  }
+  #lightBox #closeBtnLightBox {
+    position: absolute;
+    top: 260px;
+    right: 38px;
+    z-index: 200000;
+  }
+  #lightBox #closeBtnLightBox img {
+    width: 15px;
+    height: 15px;
+  }
+  #lightBox #suivantLightBox {
+    position: absolute;
+    top: 365px;
+    right: 38px;
+    z-index: 200000;
+  }
+  #lightBox #suivantLightBox img {
+    width: 15px;
+    height: 15px;
+  }
+  #lightBox #precedentLightBox {
+    position: absolute;
+    top: 365px;
+    left: 38px;
+    z-index: 200000;
+  }
+  #lightBox #precedentLightBox img {
+    width: 15px;
+    height: 15px;
+  }
+  #lightBox #photoSlider {
+    width: 100%;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #lightBox #photoSlider img {
+    width: 250px;
+    height: 250px;
+    margin-left: 0px;
+    object-fit: cover;
+    margin-top: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 6px 20px grey;
+    position: relative;
+  }
+  #lightBox #photoSlider video {
+    width: 250px;
+    height: 250px;
+    margin-left: 0px;
+    object-fit: cover;
+    margin-top: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 6px 20px grey;
+    position: relative;
+  }
+  #lightBox #photoSlider p {
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: medium;
+    color: #901c1c;
+    font-weight: 500;
+    width: 250px;
+    text-align: start;
+  }
+
+  footer {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  main img {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    top: 72px;
+    right: 18px;
+  }
+
+  #lightBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    top: 0px;
+    left: 0;
+    background-color: white;
+    z-index: 400000;
+  }
+  #lightBox #closeBtnLightBox {
+    position: absolute;
+    top: 270px;
+    right: 30px;
+    z-index: 200000;
+  }
+  #lightBox #closeBtnLightBox img {
+    width: 15px;
+    height: 15px;
+  }
+  #lightBox #suivantLightBox {
+    position: absolute;
+    top: 365px;
+    right: 30px;
+    z-index: 200000;
+  }
+  #lightBox #suivantLightBox img {
+    width: 15px;
+    height: 15px;
+  }
+  #lightBox #precedentLightBox {
+    position: absolute;
+    top: 365px;
+    left: 30px;
+    z-index: 200000;
+  }
+  #lightBox #precedentLightBox img {
+    width: 15px;
+    height: 15px;
+  }
+  #lightBox #photoSlider {
+    width: 100%;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #lightBox #photoSlider img {
+    width: 220px;
+    height: 220px;
+    margin-left: 0px;
+    object-fit: cover;
+    margin-top: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 6px 20px grey;
+    position: relative;
+  }
+  #lightBox #photoSlider video {
+    width: 220px;
+    height: 220px;
+    margin-left: 0px;
+    object-fit: cover;
+    margin-top: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 6px 20px grey;
+    position: relative;
+  }
+  #lightBox #photoSlider p {
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: medium;
+    color: #901c1c;
+    font-weight: 500;
+    width: 220px;
+    text-align: start;
+  }
+}
