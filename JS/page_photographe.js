@@ -43,7 +43,7 @@ class Media {
 }
 
 let photographers;
-
+let totalLike = 0;
 // récup données des photographes dans JSON
 
 fetch('JS/data.json')
@@ -105,7 +105,6 @@ fetch('JS/data.json')
         data.price
       );
 
-      let totalLike = 0;
       totalLike += media.likes;
 
       // Pattern Factory pour créer des vidéos ou photos
@@ -175,7 +174,7 @@ fetch('JS/data.json')
     const footer = document.querySelector('footer');
     footer.innerHTML += `
         <div class="compte-like">
-            <span class="like" id="nbrTotalLikes" tabindex="${photographer.id} aria-label="Ce photographe a été aimé ${photographer.price} fois"></span> <i class="fas fa-heart"></i>
+            <span class="like" id="nbrTotalLikes" tabindex="${photographer.id} aria-label="Ce photographe a été aimé ${photographer.price} fois">${totalLike}</span> <i class="fas fa-heart"></i>
         </div>
         <p tabindex="${photographer.id} aria-label="Le prix de ce photographe est ${photographer.price}€">${photographer.price} €/jour</p> `;
 
@@ -746,8 +745,8 @@ fetch('JS/data.json')
         let media = mediaData.find(element => element.id == id);
         currentViewedMedia = media;
 
-        const imageTag = `<img class='carroussel-img' id="carroussel-img-${media.id}" src='photos/${media.photographerId}/${media.image}''/>`;
-        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='photos/${media.photographerId}/${media.video}''></video>`;
+        const imageTag = `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}''/>`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}''></video>`;
 
         mainDivDetail.style.visibility = 'hidden';
         carroussel.style.visibility = 'hidden';
@@ -781,8 +780,8 @@ fetch('JS/data.json')
       let nextMedia = mediaData[index + incrementationIndex];
       currentViewedMedia = nextMedia;
 
-      const imageTag = `<img class="carroussel-img" id="carroussel-img-${nextMedia.id}" src="photos/${nextMedia.photographerId}/${nextMedia.image}">`;
-      const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${nextMedia.id}" src="photos/${nextMedia.photographerId}/${nextMedia.video}"></video>`;
+      const imageTag = `<img class="carroussel-img" id="carroussel-img-${nextMedia.id}" src="medias/photos/${nextMedia.photographerId}/${nextMedia.image}">`;
+      const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${nextMedia.id}" src="medias/photos/${nextMedia.photographerId}/${nextMedia.video}"></video>`;
 
       if (currentViewedMedia != undefined) {
         photoSlider.innerHTML = `
@@ -814,8 +813,8 @@ fetch('JS/data.json')
       currentViewedMedia = prevMedia;
 
       if (currentViewedMedia != undefined) {
-        const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="photos/${prevMedia.photographerId}/${prevMedia.image}">`;
-        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="photos/${prevMedia.photographerId}/${prevMedia.video}"></video>`;
+        const imageTag = `<img class="carroussel-img" id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.image}">`;
+        const videoTag = `<video controls class='carroussel-img' id="carroussel-img-${prevMedia.id}" src="medias/photos/${prevMedia.photographerId}/${prevMedia.video}"></video>`;
         photoSlider.innerHTML = `
                 ${prevMedia.video == undefined ? imageTag : videoTag} 
                 <p tabindex="${prevMedia.photographerId}">${prevMedia.title}</p>
