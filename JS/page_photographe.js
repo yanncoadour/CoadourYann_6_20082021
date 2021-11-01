@@ -114,7 +114,7 @@ fetch('JS/data.json')
       // Pattern Factory pour créer des vidéos ou photos
       function generateMediaTag() {
         if (media.video == undefined) {
-          return `<img class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.image}' alt='${media.description}'/>`;
+          return `<img class='carroussel-img' id="carroussel-img-${media.id}"  src='medias/photos/${media.photographerId}/${media.image}' alt='${media.description}'/>`;
         }
         return `<video controls class='carroussel-img' id="carroussel-img-${media.id}" src='medias/photos/${media.photographerId}/${media.video}' alt='${media.description}'></video>`;
       }
@@ -135,23 +135,25 @@ fetch('JS/data.json')
                }" aria-label=" le prix de cette photo est ${media.price}€">${
         media.price
       } €</p>
-               <div class="like-compteur" tabindex="${
-                 media.photographerId
-               }"> <span class="likeCounter" id="like-counter-${
-        media.id
-      }" aria-label="il à été aimé ${media.likes} fois ">${
-        media.likes
-      }</span><span><i class="fas fa-heart" id="like-media-${
-        media.id
-      }"></i></span></div>
+      <div class="like-compteur" > 
+        <span class="likeCounter" id="like-counter-${media.id}" tabindex="${media.photographerId}" aria-label="il à été aimé ${media.likes} fois ">${media.likes
+      }</span><i class="fas fa-heart" tabindex="${media.photographerId}" id="like-media-${
+        media.id 
+      }" ></i></div>
             </div>
             </div>
         </article>`;
 
       //--------------------------------------- Incrémentation des likes----------------------------------------------------------
-
+      
       carroussel.addEventListener('click', incrementationLike);
 
+      window.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+              incrementationLike(event);
+            }
+          });
+  
       // Affichage du nombre de like avec incrémentation à chaque clic
       function incrementationLike(e) {
         if (e.target && e.target.id == `like-media-${media.id}`) {
@@ -178,7 +180,7 @@ fetch('JS/data.json')
     const footer = document.querySelector('footer');
     footer.innerHTML += `
         <div class="compte-like">
-            <span class="like" id="nbrTotalLikes" tabindex="${photographer.id} aria-label="Ce photographe a été aimé ${photographer.price} fois"></span> <i class="fas fa-heart"></i>
+            <span class="like" id="nbrTotalLikes" tabindex="${photographer.id} aria-label="Ce photographe a été aimé ${photographer.price} fois">${totalLike}</span> <i class="fas fa-heart"></i>
         </div>
         <p tabindex="${photographer.id} aria-label="Le prix de ce photographe est ${photographer.price}€">${photographer.price} €/jour</p> `;
 
@@ -256,6 +258,11 @@ fetch('JS/data.json')
           let currentViewedMedia;
 
           carroussel.addEventListener('click', throwLightBox);
+          window.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+              throwLightBox(event);
+            }
+          });
 
           // fonction d'affichage lightBox
           function throwLightBox(e) {
@@ -605,9 +612,9 @@ fetch('JS/data.json')
             media.id
           }" aria-label="il à été aimé ${media.likes} fois ">${
             media.likes
-          }</span><span><i class="fas fa-heart" id="like-media-${
+          }</span><button><i class="fas fa-heart" id="like-media-${
             media.id
-          }"></i></span></div>
+          }"></i></button></div>
             </div>
             </div>
         </article>`;
